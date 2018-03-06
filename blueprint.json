@@ -12,16 +12,191 @@
       "version": {
         "major": 0,
         "minor": 0,
-        "level": "alpha",
+        "level": "beta",
         "patch": 0
       }
     },
-    "timestamp": "2018-03-06T13:44:06+11:00"
+    "software": {
+      "display": {
+        "title": "ldap access",
+        "label": "ldap_access"
+      }
+    },
+    "timestamp": "2018-03-05T14:32:08+11:00"
   },
   "software": {
     "base": {
       "name": "ldap_access",
-      "deployment_type": "worker"
-    }
+      "publisher_namespace": "EnginesSystem",
+      "type_path": "ldap_access",
+      "service_handle_field": "service_name",
+      "parent_image": "engines/servicebase",
+      "deployment_type": "worker",
+      "memory": {
+        "required": 128,
+        "recommended": 128
+      },
+      "run_as_user": "openldap"
+    },
+    "disposition": {
+      "persistent": true,
+      "consumer_exportable": true
+    },
+    "constants": [
+      {
+        "name": "LDAP_HOST",
+        "value": "ldap.engines.internal"
+      }
+    ],
+    "target_environment_variables": [
+      {
+        "variable_name": "ldap_password",
+        "environment_variable_name": "ldap_password"
+      },
+      {
+        "variable_name": "access_dn",
+        "environment_variable_name": "ldap_dn"
+      }
+    ],
+    "consumers": {
+      "accepts": [
+        "ManagedEngine",
+        "ManagedService"
+      ]
+    },
+    "consumer_params": [
+      {
+        "name": "type",
+        "mandatory": true,
+        "immutable": true,
+        "ask_at_build_time": true,
+        "input": {
+          "type": "select",
+          "collection": {
+            "items": {
+              "group": "Group",
+              "ou": "Organizational Unit",
+              "access": "Ldap Access"
+            }
+          }
+        }
+      },
+      {
+        "name": "cn",
+        "value": "_Engines_Builder(engine_name)",
+        "immutable": true,
+        "ask_at_build_time": true,
+        "input": {
+          "type": "string",
+          "title": "cn"
+        }
+      },
+      {
+        "name": "read_access",
+        "value": "all",
+        "immutable": true,
+        "ask_at_build_time": true,
+        "input": {
+          "type": "select_with_input",
+          "label": "Read access",
+          "comment": "self always has read access",
+          "collection": {
+            "include_blank": true,
+            "items": {
+              "all": "by all",
+              "authenticated": "authenticated",
+              "private": "private"
+            }
+          }
+        }
+      },
+      {
+        "name": "write_access",
+        "value": "none",
+        "immutable": true,
+        "ask_at_build_time": true,
+        "input": {
+          "type": "select_with_input",
+          "label": "Write access",
+          "comment": "self and admin always has write access",
+          "collection": {
+            "include_blank": true,
+            "items": {
+              "none": "None",
+              "authenticated": "Authenticated"
+            }
+          }
+        }
+      },
+      {
+        "name": "access_dn",
+        "value": "uid=_Engines_Builder(engine_name),ou=_Engines_Builder(ctype).,ou=hosts,ou=Engines,dc=engines,dc=internal",
+        "immutable": true,
+        "ask_at_build_time": true,
+        "input": {
+          "type": "hidden"
+        }
+      },
+      {
+        "name": "ldap_password",
+        "value": "_Engines_System(random(8))",
+        "input": {
+          "type": "password"
+        }
+      },
+      {
+        "name": "service_name",
+        "value": "_Engines_Fields(cn)__Engines_Fields(type)",
+        "mandatory": true,
+        "immutable": true,
+        "ask_at_build_time": true,
+        "input": {
+          "type": "string"
+        }
+      }
+    ],
+    "actionators": [
+      {
+        "name": "set_admin_password",
+        "label": "Set LDAP Admin Password",
+        "return_type": "json",
+        "variables": [
+          {
+            "name": "current_password",
+            "input": {
+              "type": "password",
+              "label": "Current Password"
+            }
+          },
+          {
+            "name": "new_password",
+            "input": {
+              "type": "password_with_confirmation",
+              "label": "New Password"
+            }
+          }
+        ]
+      },
+      {
+        "name": "set_debug_level",
+        "label": "Set Debug Level",
+        "return_type": "none",
+        "variables": [
+          {
+            "name": "debug_level",
+            "value": "0",
+            "input": {
+              "type": "integer",
+              "label": "Debug Level Integer"
+            }
+          }
+        ]
+      },
+      {
+        "name": "get_debug_level",
+        "label": "Show debug level",
+        "return_type": "json"
+      }
+    ]
   }
 }
