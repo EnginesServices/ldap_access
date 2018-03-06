@@ -22,7 +22,7 @@
         "label": "ldap_access"
       }
     },
-    "timestamp": "2018-03-06T13:49:39+11:00"
+    "timestamp": "2018-03-06T13:57:49+11:00"
   },
   "software": {
     "base": {
@@ -68,7 +68,7 @@
     "consumer_params": [
       {
         "name": "access_dn",
-        "value": "uid=_Engines_Builder(engine_name),ou=_Engines_Builder(ctype).,ou=hosts,ou=Engines,dc=engines,dc=internal",
+        "value": "uid=_Engines_Builder(engine_name),ou=hosts,ou=Engines,dc=engines,dc=internal",
         "immutable": true,
         "ask_at_build_time": true,
         "input": {
