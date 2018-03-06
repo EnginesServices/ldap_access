@@ -15,8 +15,13 @@
         "level": "alpha",
         "patch": 0
       }
-    }
+    },
+    "timestamp": "2018-03-06T13:44:06+11:00"
   },
   "software": {
+    "base": {
+      "name": "ldap_access",
+      "deployment_type": "worker"
+    }
   }
 }
