@@ -22,7 +22,7 @@
         "label": "ldap_access"
       }
     },
-    "timestamp": "2018-03-26T10:28:39+11:00"
+    "timestamp": "2018-03-26T15:40:58+11:00"
   },
   "software": {
     "base": {
@@ -97,6 +97,7 @@
         "value": "access",
         "mandatory": true,
         "immutable": true,
+        "ask_at_build_time": true,
         "input": {
           "type": "hidden"
         }
