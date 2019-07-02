@@ -22,7 +22,7 @@
         "label": "ldap_access"
       }
     },
-    "timestamp": "2019-06-25T14:10:08+10:00"
+    "timestamp": "2019-07-03T09:30:45+10:00"
   },
   "software": {
     "base": {
@@ -106,6 +106,14 @@
         "ask_at_build_time": true,
         "input": {
           "type": "hidden"
+        }
+      },
+      {
+        "name": "group_membership",
+        "ask_at_build_time": true,
+        "input": {
+          "type": "text",
+          "label": "list of groups dn"
         }
       }
     ],
